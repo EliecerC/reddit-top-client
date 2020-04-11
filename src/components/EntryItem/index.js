@@ -11,7 +11,7 @@ import { displayDate } from '../../utils';
 import useStyles from './EntryItem.styles';
 
 function EntryItem(props) {
-  const { data, onSelect } = props;
+  const { data, read, onSelect } = props;
   const classes = useStyles();
 
   const handleSelectItem = (id) => (event) => {
@@ -27,9 +27,12 @@ function EntryItem(props) {
       className={classes.listItem}
       onClick={handleSelectItem(data.id)}
     >
+      {!read && <div className={classes.badge} />}
+      
       <ListItemAvatar>
         <Avatar variant="rounded" alt={data.author} src={data.thumbnail} />
       </ListItemAvatar>
+
       <ListItemText
         classes={{ secondary: classes.listItemText }}
         primary={data.title}

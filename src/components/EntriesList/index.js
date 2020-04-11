@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import clsx from 'clsx';
 // components
 import Divider from '@material-ui/core/Divider';
@@ -12,6 +12,7 @@ import useStyles from './EntriesList.styles';
 
 function EntriesList(props) {
   const {
+    read,
     entries,
     onSelect,
     isLoading,
@@ -24,6 +25,11 @@ function EntriesList(props) {
     event.persist();
     onSelect && onSelect(id, event);
   };
+
+  const getReadStatus = useCallback((id) => {
+    const wasReaded = read.indexOf(id) > -1; 
+    return wasReaded;
+  }, [read])
 
   return (
     <aside className={clsx(classes.listContainer)}>
@@ -42,7 +48,11 @@ function EntriesList(props) {
         {
           entries.map(({ data }) => (
             <>
-              <EntryItem data={data} onSelect={handleSelectItem} />
+              <EntryItem 
+                data={data}
+                read={getReadStatus(data.id)}
+                onSelect={handleSelectItem} 
+              />
               <Divider component="li" variant="middle" classes={{ root: classes.divider }} />
             </>
           ))

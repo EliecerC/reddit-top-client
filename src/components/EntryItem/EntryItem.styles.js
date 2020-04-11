@@ -13,4 +13,14 @@ export default makeStyles(theme => ({
     display: 'inline',
     fontWeight: '600',
   },
+  badge: {
+    width: '10px',
+    height: '10px',
+    position: 'absolute',
+    borderRadius: '50%',
+    backgroundColor: '#4caf50',
+    top: '10px',
+    left: '10px',
+    zIndex: 1,
+  }
 }));

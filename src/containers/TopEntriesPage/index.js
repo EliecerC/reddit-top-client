@@ -7,6 +7,7 @@ import EntriesList from '../../components/EntriesList';
 import EntryDetail from '../../components/EntryDetail';
 // redux
 import {
+  setAsRead,
   dismissAll,
   fetchTopEntries,
 } from '../../store/reducers/topEntries';
@@ -17,7 +18,9 @@ function TopEntriesPage(props) {
   const classes = useStyles();
   const [selected, setSelected] = useState(null);
   const {
+    read,
     after,
+    setAsRead,
     isLoading,
     topEntries,
     dismissAll,
@@ -37,8 +40,9 @@ function TopEntriesPage(props) {
 
   const handleSelectEntry = useCallback((id) => {
     const entry = topEntries.find(entry => entry.data.id === id)
+    setAsRead(id);
     setSelected(entry.data);
-  }, [topEntries]);
+  }, [setAsRead, topEntries]);
 
   const handleDismissAll = useCallback(() => {
     dismissAll();
@@ -49,6 +53,7 @@ function TopEntriesPage(props) {
       <Grid container>
         <Grid item xs={3}>
           <EntriesList
+            read={read}
             entries={topEntries}
             isLoading={isLoading}
             onSelect={handleSelectEntry}
@@ -69,12 +74,14 @@ function TopEntriesPage(props) {
 }
 
 const mapStateToProps = state => ({
+  read: state.topEntries.read,
   topEntries: state.topEntries.list,
   after: state.topEntries.paging.after,
   isLoading: state.topEntries.isLoading,
 });
 
 const actions = {
+  setAsRead,
   dismissAll,
   fetchTopEntries
 };
