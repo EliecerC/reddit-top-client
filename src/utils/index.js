@@ -1,7 +1,7 @@
 /**
  * 
  * @param {number} timestamp
- * @returns {string} 
+ * @returns {string}
  */
 export function displayDate(timestamp) {
   let difference = ''; 

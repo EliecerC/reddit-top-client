@@ -5,7 +5,6 @@ let initialState = {
   list: [],
   read: [],
   paging: {},
-  dismissed: [],
   isLoading: false,
 };
 
@@ -20,7 +19,8 @@ const entriesSlice = createSlice({
       state.dismissed.push(action.payload);
     },
     dismissAll(state) {
-      state.dismissed = state.list.map(item => item.id);
+      state.list = [];
+      state.paging = {};
     },
     fetchTopEntries(state) {
       state.isLoading = true;

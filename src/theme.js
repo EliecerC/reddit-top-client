@@ -1,4 +1,4 @@
-import { red } from '@material-ui/core/colors';
+import { red, orange } from '@material-ui/core/colors';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 // A custom theme for this app
@@ -8,13 +8,15 @@ const theme = createMuiTheme({
       main: '#ffffff',
     },
     secondary: {
-      main: '#ffffff'
+      main: orange[500],
     },
     error: {
       main: red.A400,
     },
     background: {
-      default: '#333333',      
+      default: '#333333',
+      secondary: 'rgba(0,0,0,1)',
+      hover: 'rgba(0,0,0,0.3)',
     },
   },
   button: {
