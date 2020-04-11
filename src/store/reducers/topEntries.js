@@ -4,6 +4,7 @@ let initialState = {
   error: null,
   list: [],
   read: [],
+  paging: {},
   dismissed: [],
   isLoading: false,
 };
@@ -26,7 +27,9 @@ const entriesSlice = createSlice({
       state.error = null;
     },
     fetchTopEntriesSuccess(state, action) {
-      state.list = action.payload;
+      const { after, before, children } = action.payload;
+      state.list.push(...children);
+      state.paging = { after, before }; 
       state.isLoading = false;
     },
     fetchTopEntriesError(state, action) {

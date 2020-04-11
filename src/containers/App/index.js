@@ -11,7 +11,7 @@ import routes from '../../routes';
 
 const App = () => {
   return (
-    <Suspense fallback={<SimpleBackdrop delay={300} />}>
+    <Suspense fallback={<SimpleBackdrop open={true} delay={300} />}>
       <Router>
         <Switch>
           {routes.map((Route, i) =>

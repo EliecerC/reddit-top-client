@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { from } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { mergeMap } from 'rxjs/operators';
@@ -9,11 +10,16 @@ import {
 
 export const fetchTopEntriesEpic = action$ => action$.pipe(
   ofType(fetchTopEntries.type),
-  mergeMap(action =>
+  mergeMap(({ payload }) =>
     from(
-      new Promise((resolve) => {
-        setTimeout(() => resolve(action.payload), 1000);
-      })
+      axios
+        .get('https://www.reddit.com/r/all/top.json', {
+          params: {
+            limit: payload ? payload.limit || 5 : 5,
+            after: payload ? payload.after : null
+          }
+        })
+        .then(response => response.data.data)
         .then(fetchTopEntriesSuccess)
         .catch(fetchTopEntriesError)
     )
