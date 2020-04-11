@@ -16,14 +16,14 @@ export default makeStyles(theme => ({
     width: '100%',
     position: 'sticky',
     top: 0,
-    zIndex: '1',
+    zIndex: '2',
     backgroundColor: theme.palette.background.secondary
   },
   toolbarBottom: {
     width: '100%',
     position: 'sticky',
     bottom: 0,
-    zIndex: '1',
+    zIndex: '2',
     backgroundColor: theme.palette.background.secondary
   },
   toolbarText: {

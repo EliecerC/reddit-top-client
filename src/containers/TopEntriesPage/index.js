@@ -9,6 +9,7 @@ import EntryDetail from '../../components/EntryDetail';
 import {
   setAsRead,
   dismissAll,
+  dismissEntry,
   fetchTopEntries,
 } from '../../store/reducers/topEntries';
 // styles
@@ -24,6 +25,7 @@ function TopEntriesPage(props) {
     isLoading,
     topEntries,
     dismissAll,
+    dismissEntry,
     fetchTopEntries,
   } = props;
 
@@ -44,6 +46,10 @@ function TopEntriesPage(props) {
     setSelected(entry.data);
   }, [setAsRead, topEntries]);
 
+  const handleDismissEntry = useCallback((id) => {
+    dismissEntry(id);
+  }, [dismissEntry]);
+
   const handleDismissAll = useCallback(() => {
     dismissAll();
   }, [dismissAll]);
@@ -57,8 +63,10 @@ function TopEntriesPage(props) {
             entries={topEntries}
             isLoading={isLoading}
             onSelect={handleSelectEntry}
+            onDismiss={handleDismissEntry}
             handleLoadMore={handleLoadMore}
             handleDismissAll={handleDismissAll}
+            selectedId={selected && selected.id}
           />
         </Grid>
         <Grid item xs={9}>
@@ -83,6 +91,7 @@ const mapStateToProps = state => ({
 const actions = {
   setAsRead,
   dismissAll,
+  dismissEntry,
   fetchTopEntries
 };
 

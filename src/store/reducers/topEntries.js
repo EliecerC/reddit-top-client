@@ -15,8 +15,8 @@ const entriesSlice = createSlice({
     setAsRead(state, action) {
       state.read.push(action.payload);
     },
-    setAsDismissed(state, action) {
-      state.dismissed.push(action.payload);
+    dismissEntry(state, action) {
+      state.list = state.list.filter(item => item.data.id !== action.payload);
     },
     dismissAll(state) {
       state.list = [];
@@ -41,7 +41,7 @@ const entriesSlice = createSlice({
 
 export const { 
   setAsRead,
-  setAsDismissed,
+  dismissEntry,
   dismissAll,
   fetchTopEntries,
   fetchTopEntriesSuccess,

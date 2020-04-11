@@ -12,12 +12,14 @@ function EntryDetail(props) {
   const renderContent = useCallback(() => {
     const extension = entry.url.split('.').slice(-1).shift();
     switch(extension) {
-      case 'html':
-        return <iframe title={entry.title} src={entry.url} />
       case 'gifv':
         return <img alt={entry.title} src={entry.url.replace('.gifv', '.gif')} />
-      default: 
+      case 'jpg':
+      case 'png':
+      case 'jpge':
         return <img alt={entry.title} src={entry.url} />
+      default: 
+        return <img alt={entry.title} src={entry.thumbnail} />
     }
   }, [entry]);
 
@@ -34,7 +36,7 @@ function EntryDetail(props) {
             {entry.title}
           </Typography>
         </Grid>
-        
+
         <Grid item xs={12} md={4} lg={3}>
           {entry.author}
         </Grid>

@@ -15,7 +15,9 @@ function EntriesList(props) {
     read,
     entries,
     onSelect,
+    onDismiss,
     isLoading,
+    selectedId,
     handleLoadMore,
     handleDismissAll
   } = props;
@@ -26,10 +28,21 @@ function EntriesList(props) {
     onSelect && onSelect(id, event);
   };
 
+  const handleDismissItem = (id, event) => {
+    event.persist();
+    onDismiss && onDismiss(id, event)
+  }
+
   const getReadStatus = useCallback((id) => {
     const wasReaded = read.indexOf(id) > -1; 
     return wasReaded;
-  }, [read])
+  }, [read]);
+
+  const getButtonLabel = useCallback(() => {
+    if (isLoading) return 'Loading...';
+    if (!isLoading && !entries.length) return 'Load top entries';
+    return 'Load more';
+  }, [entries, isLoading]);
 
   return (
     <aside className={clsx(classes.listContainer)}>
@@ -50,8 +63,10 @@ function EntriesList(props) {
             <>
               <EntryItem 
                 data={data}
-                read={getReadStatus(data.id)}
                 onSelect={handleSelectItem} 
+                onDismiss={handleDismissItem}
+                read={getReadStatus(data.id)}
+                isSelected={data.id === selectedId}
               />
               <Divider component="li" variant="middle" classes={{ root: classes.divider }} />
             </>
@@ -62,7 +77,7 @@ function EntriesList(props) {
           onClick={handleLoadMore}
           className={classes.button}
         >
-          Load more
+          {getButtonLabel()}
         </Button>
       </List>
 

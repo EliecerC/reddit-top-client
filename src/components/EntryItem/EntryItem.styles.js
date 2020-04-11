@@ -5,6 +5,9 @@ export default makeStyles(theme => ({
     '&:hover': {
       backgroundColor: theme.palette.background.hover,
     },
+    '&.selected': {
+      backgroundColor: theme.palette.background.hover,
+    }
   },
   listItemText: {
     color: theme.palette.primary.main,
