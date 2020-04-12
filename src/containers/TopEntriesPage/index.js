@@ -57,7 +57,7 @@ function TopEntriesPage(props) {
   return (
     <div className={classes.root}>
       <Grid container>
-        <Grid item xs={3}>
+        <Grid item xs={4} lg={3}>
           <EntriesList
             read={read}
             entries={topEntries}
@@ -69,7 +69,7 @@ function TopEntriesPage(props) {
             selectedId={selected && selected.id}
           />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8} lg={9}>
           <main className={classes.content}>
             <Container maxWidth="lg" className={classes.container}>
               <EntryDetail entry={selected} />

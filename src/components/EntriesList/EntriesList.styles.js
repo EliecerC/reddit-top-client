@@ -37,12 +37,11 @@ export default makeStyles(theme => ({
     height: '50px',
     width: '100%',
     margin: '0 auto',
-    color: theme.palette.primary.main,
     '&:hover': {
       backgroundColor: theme.palette.background.hover,
     },
     '&[disabled]': {
       ...theme.button.disabled
     }
-  }
+  },
 }));

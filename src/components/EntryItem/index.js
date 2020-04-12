@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import clsx from 'clsx';
 // components
 import ListItem from '@material-ui/core/ListItem';
@@ -14,8 +14,9 @@ import { displayDate } from '../../utils';
 import useStyles from './EntryItem.styles';
 
 function EntryItem(props) {
-  const { data, read, onSelect, onDismiss, isSelected } = props;
   const classes = useStyles();
+  const [dismissed, setDismissed] = useState(false);
+  const { data, read, onSelect, onDismiss, isSelected } = props;
 
   const handleSelectItem = useCallback((event) => {
     event.persist();
@@ -25,7 +26,11 @@ function EntryItem(props) {
   const handleDismiss = useCallback((event) => {
     event.persist();
     event.stopPropagation();
-    onDismiss && onDismiss(data.id, event);
+
+    setDismissed(true);
+    setTimeout(() => {
+      onDismiss && onDismiss(data.id, event);
+    }, 400);
   }, [data, onDismiss]);
 
   return (
@@ -34,7 +39,11 @@ function EntryItem(props) {
       key={data.id}
       alignItems="flex-start"
       onClick={handleSelectItem}
-      className={clsx(classes.listItem, { 'selected': isSelected })}
+      className={clsx(
+        classes.listItem, 
+        { 'selected': isSelected }, 
+        { 'dismiss-animation': dismissed },
+      )}
     >
       {!read && <div className={classes.badge} />}
 
@@ -48,14 +57,16 @@ function EntryItem(props) {
         secondary={
           <>
             <Typography
-              component="span"
               variant="body2"
               color="primary"
+              component="span"
               className={classes.inline}
             >
               {data.author}
             </Typography>
-            {' '}{displayDate(data.created_utc)}
+            {' - '}{displayDate(data.created_utc)}
+            <br />
+            Comments: {data.num_comments}
           </>
         }
       />
@@ -63,7 +74,7 @@ function EntryItem(props) {
       <IconButton 
         edge="end"
         size="small"
-        color="primary"
+        color="secondary"
         title="dismiss"
         aria-label="dismiss"
         onClick={handleDismiss}

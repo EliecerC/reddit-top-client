@@ -13,7 +13,7 @@ const entriesSlice = createSlice({
   initialState,
   reducers: {
     setAsRead(state, action) {
-      state.read.push(action.payload);
+      state.read = [...new Set([...state.read, action.payload])];
     },
     dismissEntry(state, action) {
       state.list = state.list.filter(item => item.data.id !== action.payload);

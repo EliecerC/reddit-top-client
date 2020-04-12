@@ -23,15 +23,15 @@ function EntriesList(props) {
   } = props;
   const classes = useStyles();
 
-  const handleSelectItem = (id, event) => {
+  const handleSelectItem = useCallback((id, event) => {
     event.persist();
     onSelect && onSelect(id, event);
-  };
+  }, [onSelect]);
 
-  const handleDismissItem = (id, event) => {
+  const handleDismissItem = useCallback((id, event) => {
     event.persist();
     onDismiss && onDismiss(id, event)
-  }
+  }, [onDismiss]);
 
   const getReadStatus = useCallback((id) => {
     const wasReaded = read.indexOf(id) > -1; 
@@ -60,19 +60,24 @@ function EntriesList(props) {
       <List className={classes.listRoot}>
         {
           entries.map(({ data }) => (
-            <>
-              <EntryItem 
+            <React.Fragment key={data.id}>
+              <EntryItem
                 data={data}
                 onSelect={handleSelectItem} 
                 onDismiss={handleDismissItem}
                 read={getReadStatus(data.id)}
                 isSelected={data.id === selectedId}
               />
-              <Divider component="li" variant="middle" classes={{ root: classes.divider }} />
-            </>
+              <Divider
+                component="li" 
+                variant="middle" 
+                classes={{ root: classes.divider }} 
+              />
+            </React.Fragment>
           ))
         }
         <Button
+          color="secondary"
           disabled={isLoading}
           onClick={handleLoadMore}
           className={classes.button}
