@@ -60,14 +60,14 @@ function PostsList(props) {
 
       <List className={classes.listRoot}>
         {
-          posts.map(({ data }) => (
-            <React.Fragment key={data.id}>
+          posts.map(({ data: post }) => (
+            <React.Fragment key={post.id}>
               <PostListItem
-                data={data}
+                post={post}
                 onSelect={handleSelectItem} 
                 onDismiss={handleDismissItem}
-                read={getReadStatus(data.id)}
-                isSelected={data.id === selectedId}
+                read={getReadStatus(post.id)}
+                isSelected={post.id === selectedId}
               />
               <Divider
                 component="li" 

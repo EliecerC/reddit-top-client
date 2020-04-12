@@ -40,13 +40,13 @@ function TopPostsPage(props) {
     fetchTopPosts({ limit: 10, after });
   }, [after, fetchTopPosts]);
 
-  const handleSelectEntry = useCallback((id) => {
-    const entry = topPosts.find(entry => entry.data.id === id)
+  const handleSelectPost = useCallback((id) => {
+    const post = topPosts.find(post => post.data.id === id)
     setAsRead(id);
-    setSelected(entry.data);
+    setSelected(post.data);
   }, [setAsRead, topPosts]);
 
-  const handleDismissEntry = useCallback((id) => {
+  const handleDismissPost = useCallback((id) => {
     dismissPost(id);
   }, [dismissPost]);
 
@@ -63,8 +63,8 @@ function TopPostsPage(props) {
             title="Reddit Top Posts"
             posts={topPosts}
             isLoading={isLoading}
-            onSelect={handleSelectEntry}
-            onDismiss={handleDismissEntry}
+            onSelect={handleSelectPost}
+            onDismiss={handleDismissPost}
             handleLoadMore={handleLoadMore}
             handleDismissAll={handleDismissAll}
             selectedId={selected && selected.id}
@@ -73,7 +73,7 @@ function TopPostsPage(props) {
         <Grid item xs={8} lg={9}>
           <main className={classes.content}>
             <Container maxWidth="lg" className={classes.container}>
-              <PostDetail entry={selected} />
+              <PostDetail post={selected} />
             </Container>
           </main>
         </Grid>

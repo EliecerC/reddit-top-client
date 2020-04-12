@@ -8,34 +8,34 @@ import useStyles from './PostDetail.styles';
 import { displayDate } from '../../utils';
 
 function PostDetail(props) {
-  const { entry } = props;
+  const { post } = props;
   const classes = useStyles();
 
   const renderContent = useCallback(() => {
     let src = '';
-    const extension = entry.url.split('.').slice(-1).shift();
+    const extension = post.url.split('.').slice(-1).shift();
 
     switch(extension) {
       case 'gifv':
-        src = entry.url.replace('.gifv', '.gif')
+        src = post.url.replace('.gifv', '.gif')
         break;
       case 'gif':
       case 'jpg':
       case 'png':
       case 'jpge':
-        src = entry.url;
+        src = post.url;
         break;
       default: 
-        src = entry.thumbnail;
+        src = post.thumbnail;
     }
 
-    return <img className={classes.image} alt={entry.title} src={src} />;
-  }, [entry, classes]);
+    return <img className={classes.image} alt={post.title} src={src} />;
+  }, [post, classes]);
 
   return (
     <Grid container className={classes.container}>
       {
-        entry ?
+        post ?
           <>
             <Grid item xs={12} md={8} lg={9}>
               <Typography
@@ -44,13 +44,13 @@ function PostDetail(props) {
                 color="primary"
                 classes={{ root: classes.title }}
               >
-                {entry.title}
+                {post.title}
               </Typography>
             </Grid>
 
             <Grid item xs={12} md={4} lg={3}>
               <Typography align="center" color="secondary">
-                {entry.author} - {displayDate(entry.created_utc)}
+                {post.author} - {displayDate(post.created_utc)}
               </Typography> 
             </Grid>
 
@@ -63,7 +63,7 @@ function PostDetail(props) {
             </Grid> 
 
             <Grid item xs={12}>
-              {entry.num_comments} comments on this post
+              {post.num_comments} comments on this post
             </Grid> 
           </> :
           <Grid item xs={12}>

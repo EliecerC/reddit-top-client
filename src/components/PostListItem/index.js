@@ -16,12 +16,12 @@ import useStyles from './PostListItem.styles';
 function PostListItem(props) {
   const classes = useStyles();
   const [dismissed, setDismissed] = useState(false);
-  const { data, read, onSelect, onDismiss, isSelected } = props;
+  const { post, read, onSelect, onDismiss, isSelected } = props;
 
   const handleSelectItem = useCallback((event) => {
     event.persist();
-    onSelect && onSelect(data.id, event);
-  }, [data, onSelect]);
+    onSelect && onSelect(post.id, event);
+  }, [post, onSelect]);
 
   const handleDismiss = useCallback((event) => {
     event.persist();
@@ -29,14 +29,14 @@ function PostListItem(props) {
 
     setDismissed(true);
     setTimeout(() => {
-      onDismiss && onDismiss(data.id, event);
+      onDismiss && onDismiss(post.id, event);
     }, 400);
-  }, [data, onDismiss]);
+  }, [post, onDismiss]);
 
   return (
     <ListItem
       button
-      key={data.id}
+      key={post.id}
       alignItems="flex-start"
       onClick={handleSelectItem}
       className={clsx(
@@ -48,12 +48,12 @@ function PostListItem(props) {
       {!read && <div className={classes.badge} />}
 
       <ListItemAvatar>
-        <Avatar variant="rounded" alt={data.author} src={data.thumbnail} />
+        <Avatar variant="rounded" alt={post.author} src={post.thumbnail} />
       </ListItemAvatar>
 
       <ListItemText
         classes={{ secondary: classes.listItemText }}
-        primary={data.title}
+        primary={post.title}
         secondary={
           <>
             <Typography
@@ -62,11 +62,11 @@ function PostListItem(props) {
               component="span"
               className={classes.inline}
             >
-              {data.author}
+              {post.author}
             </Typography>
-            {' - '}{displayDate(data.created_utc)}
+            {' - '}{displayDate(post.created_utc)}
             <br />
-            Comments: {data.num_comments}
+            Comments: {post.num_comments}
           </>
         }
       />
