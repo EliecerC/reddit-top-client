@@ -6,14 +6,15 @@ import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import EntryItem from '../EntryItem';
+import PostListItem from '../PostListItem';
 // styles
-import useStyles from './EntriesList.styles';
+import useStyles from './PostsList.styles';
 
-function EntriesList(props) {
+function PostsList(props) {
   const {
     read,
-    entries,
+    title,
+    posts,
     onSelect,
     onDismiss,
     isLoading,
@@ -40,9 +41,9 @@ function EntriesList(props) {
 
   const getButtonLabel = useCallback(() => {
     if (isLoading) return 'Loading...';
-    if (!isLoading && !entries.length) return 'Load top entries';
+    if (!isLoading && !posts.length) return 'Load top posts';
     return 'Load more';
-  }, [entries, isLoading]);
+  }, [posts, isLoading]);
 
   return (
     <aside className={clsx(classes.listContainer)}>
@@ -53,15 +54,15 @@ function EntriesList(props) {
           color="primary"
           classes={{ root: classes.toolbarText }}
         >
-          Reddit Top Posts
+          {title}
         </Typography>
       </Toolbar>
 
       <List className={classes.listRoot}>
         {
-          entries.map(({ data }) => (
+          posts.map(({ data }) => (
             <React.Fragment key={data.id}>
-              <EntryItem
+              <PostListItem
                 data={data}
                 onSelect={handleSelectItem} 
                 onDismiss={handleDismissItem}
@@ -99,4 +100,4 @@ function EntriesList(props) {
   );
 }
 
-export default EntriesList;
+export default PostsList;

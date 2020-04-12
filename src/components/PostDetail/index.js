@@ -4,10 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 // styles
-import useStyles from './EntryDetail.styles';
+import useStyles from './PostDetail.styles';
 import { displayDate } from '../../utils';
 
-function EntryDetail(props) {
+function PostDetail(props) {
   const { entry } = props;
   const classes = useStyles();
 
@@ -68,7 +68,7 @@ function EntryDetail(props) {
           </> :
           <Grid item xs={12}>
             <Typography align="center" color="secondary">
-              Select an entry
+              Select a post
             </Typography>
           </Grid>
       }
@@ -76,4 +76,4 @@ function EntryDetail(props) {
   );
 }
 
-export default EntryDetail;
+export default PostDetail;

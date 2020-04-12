@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import topEntries from './topEntries';
+import topPosts from './topPosts';
 
 export default combineReducers({
-  topEntries
+  topPosts
 });

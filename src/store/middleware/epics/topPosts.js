@@ -3,13 +3,13 @@ import { from } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { mergeMap } from 'rxjs/operators';
 import {
-  fetchTopEntries,
-  fetchTopEntriesSuccess,
-  fetchTopEntriesError,
-} from '../../reducers/topEntries';
+  fetchTopPosts,
+  fetchTopPostsSuccess,
+  fetchTopPostsError,
+} from '../../reducers/topPosts';
 
-export const fetchTopEntriesEpic = action$ => action$.pipe(
-  ofType(fetchTopEntries.type),
+export const fetchTopPostsEpic = action$ => action$.pipe(
+  ofType(fetchTopPosts.type),
   mergeMap(({ payload }) =>
     from(
       axios
@@ -20,8 +20,8 @@ export const fetchTopEntriesEpic = action$ => action$.pipe(
           }
         })
         .then(response => response.data.data)
-        .then(fetchTopEntriesSuccess)
-        .catch(fetchTopEntriesError)
+        .then(fetchTopPostsSuccess)
+        .catch(fetchTopPostsError)
     )
   )
 );

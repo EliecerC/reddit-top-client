@@ -3,19 +3,19 @@ import { connect } from 'react-redux';
 // components
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import EntriesList from '../../components/EntriesList';
-import EntryDetail from '../../components/EntryDetail';
+import PostsList from '../../components/PostsList';
+import PostDetail from '../../components/PostDetail';
 // redux
 import {
   setAsRead,
   dismissAll,
-  dismissEntry,
-  fetchTopEntries,
-} from '../../store/reducers/topEntries';
+  dismissPost,
+  fetchTopPosts,
+} from '../../store/reducers/topPosts';
 // styles
-import useStyles from './TopEntriesPage.styles';
+import useStyles from './TopPostsPage.styles';
 
-function TopEntriesPage(props) {
+function TopPostsPage(props) {
   const classes = useStyles();
   const [selected, setSelected] = useState(null);
   const {
@@ -23,32 +23,32 @@ function TopEntriesPage(props) {
     after,
     setAsRead,
     isLoading,
-    topEntries,
+    topPosts,
     dismissAll,
-    dismissEntry,
-    fetchTopEntries,
+    dismissPost,
+    fetchTopPosts,
   } = props;
 
   useEffect(() => {
-    if (!topEntries.length) {
-      fetchTopEntries({ limit: 10 });
+    if (!topPosts.length) {
+      fetchTopPosts({ limit: 10 });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLoadMore = useCallback((_event) => {
-    fetchTopEntries({ limit: 10, after });
-  }, [after, fetchTopEntries]);
+    fetchTopPosts({ limit: 10, after });
+  }, [after, fetchTopPosts]);
 
   const handleSelectEntry = useCallback((id) => {
-    const entry = topEntries.find(entry => entry.data.id === id)
+    const entry = topPosts.find(entry => entry.data.id === id)
     setAsRead(id);
     setSelected(entry.data);
-  }, [setAsRead, topEntries]);
+  }, [setAsRead, topPosts]);
 
   const handleDismissEntry = useCallback((id) => {
-    dismissEntry(id);
-  }, [dismissEntry]);
+    dismissPost(id);
+  }, [dismissPost]);
 
   const handleDismissAll = useCallback(() => {
     dismissAll();
@@ -58,9 +58,10 @@ function TopEntriesPage(props) {
     <div className={classes.root}>
       <Grid container>
         <Grid item xs={4} lg={3}>
-          <EntriesList
+          <PostsList
             read={read}
-            entries={topEntries}
+            title="Reddit Top Posts"
+            posts={topPosts}
             isLoading={isLoading}
             onSelect={handleSelectEntry}
             onDismiss={handleDismissEntry}
@@ -72,7 +73,7 @@ function TopEntriesPage(props) {
         <Grid item xs={8} lg={9}>
           <main className={classes.content}>
             <Container maxWidth="lg" className={classes.container}>
-              <EntryDetail entry={selected} />
+              <PostDetail entry={selected} />
             </Container>
           </main>
         </Grid>
@@ -82,17 +83,17 @@ function TopEntriesPage(props) {
 }
 
 const mapStateToProps = state => ({
-  read: state.topEntries.read,
-  topEntries: state.topEntries.list,
-  after: state.topEntries.paging.after,
-  isLoading: state.topEntries.isLoading,
+  read: state.topPosts.read,
+  topPosts: state.topPosts.list,
+  after: state.topPosts.paging.after,
+  isLoading: state.topPosts.isLoading,
 });
 
 const actions = {
   setAsRead,
   dismissAll,
-  dismissEntry,
-  fetchTopEntries
+  dismissPost,
+  fetchTopPosts
 };
 
-export default connect(mapStateToProps, actions)(TopEntriesPage);
+export default connect(mapStateToProps, actions)(TopPostsPage);

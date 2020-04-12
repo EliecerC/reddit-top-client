@@ -1,8 +1,8 @@
 import { combineEpics } from 'redux-observable';
-import { fetchTopEntriesEpic } from './topEntries';
+import { fetchTopPostsEpic } from './topPosts';
 
 const rootEpic = combineEpics(
-  fetchTopEntriesEpic
+  fetchTopPostsEpic
 );
 
 export default rootEpic;

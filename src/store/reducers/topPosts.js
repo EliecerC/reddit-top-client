@@ -8,31 +8,31 @@ let initialState = {
   isLoading: false,
 };
 
-const entriesSlice = createSlice({
-  name: 'entries',
+const postsSlice = createSlice({
+  name: 'posts',
   initialState,
   reducers: {
     setAsRead(state, action) {
       state.read = [...new Set([...state.read, action.payload])];
     },
-    dismissEntry(state, action) {
+    dismissPost(state, action) {
       state.list = state.list.filter(item => item.data.id !== action.payload);
     },
     dismissAll(state) {
       state.list = [];
       state.paging = {};
     },
-    fetchTopEntries(state) {
+    fetchTopPosts(state) {
       state.isLoading = true;
       state.error = null;
     },
-    fetchTopEntriesSuccess(state, action) {
+    fetchTopPostsSuccess(state, action) {
       const { after, before, children } = action.payload;
       state.list.push(...children);
       state.paging = { after, before }; 
       state.isLoading = false;
     },
-    fetchTopEntriesError(state, action) {
+    fetchTopPostsError(state, action) {
       state.error = action.payload.error;
       state.isLoading = false;
     },
@@ -41,11 +41,11 @@ const entriesSlice = createSlice({
 
 export const { 
   setAsRead,
-  dismissEntry,
+  dismissPost,
   dismissAll,
-  fetchTopEntries,
-  fetchTopEntriesSuccess,
-  fetchTopEntriesError,
-} = entriesSlice.actions;
+  fetchTopPosts,
+  fetchTopPostsSuccess,
+  fetchTopPostsError,
+} = postsSlice.actions;
 
-export default entriesSlice.reducer;
+export default postsSlice.reducer;

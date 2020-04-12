@@ -11,9 +11,9 @@ import RemoveCircleOutline from '@material-ui/icons/RemoveCircleOutline';
 // utils
 import { displayDate } from '../../utils';
 // styles
-import useStyles from './EntryItem.styles';
+import useStyles from './PostListItem.styles';
 
-function EntryItem(props) {
+function PostListItem(props) {
   const classes = useStyles();
   const [dismissed, setDismissed] = useState(false);
   const { data, read, onSelect, onDismiss, isSelected } = props;
@@ -85,4 +85,4 @@ function EntryItem(props) {
   );
 }
 
-export default EntryItem;
+export default PostListItem;

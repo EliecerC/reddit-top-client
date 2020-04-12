@@ -1,7 +1,7 @@
 {
   "name": "reddit-top-client",
   "author": "Eliecer Chicott <eachicott@gmail.com>",
-  "description": "React app of a simple reddit client displaying the top entries",
+  "description": "React app of a simple reddit client displaying the top posts",
   "version": "1.0.0",
   "private": false,
   "dependencies": {
