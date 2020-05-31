@@ -6,11 +6,20 @@ import loggerMiddleware from './middleware/logger';
 import rootEpic from './middleware/epics';
 import rootReducer from './reducers';
 
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const persistConfig = {
+  key: 'topPosts',
+  storage,
+};
+ 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 const epicMiddleware = createEpicMiddleware();
 
 export default function configureAppStore(preloadedState) {
   const store = configureStore({
-    reducer: rootReducer,
+    reducer: persistedReducer,
     middleware: [
       loggerMiddleware,
       epicMiddleware,
@@ -20,6 +29,8 @@ export default function configureAppStore(preloadedState) {
     enhancers: [monitorReducersEnhancer]
   });
 
+  let persistor = persistStore(store);
+
   epicMiddleware.run(rootEpic);
   
   /* eslint-disable no-undef */
@@ -28,5 +39,5 @@ export default function configureAppStore(preloadedState) {
   }
   /* eslint-enable no-undef */
 
-  return store;
+  return { store, persistor };
 }

@@ -45,18 +45,22 @@ function PostsList(props) {
     return 'Load more';
   }, [posts, isLoading]);
 
+  const Title = (
+    <Toolbar classes={{ root: classes.toolbar }}>
+      <Typography
+        align="center"
+        component="h4"
+        color="primary"
+        classes={{ root: classes.toolbarText }}
+      >
+        {title}
+      </Typography>
+    </Toolbar>
+  );
+
   return (
     <aside className={clsx(classes.listContainer)}>
-      <Toolbar classes={{ root: classes.toolbar }}>
-        <Typography
-          align="center"
-          component="h4"
-          color="primary"
-          classes={{ root: classes.toolbarText }}
-        >
-          {title}
-        </Typography>
-      </Toolbar>
+      {Title}
 
       <List className={classes.listRoot}>
         {
@@ -64,7 +68,7 @@ function PostsList(props) {
             <React.Fragment key={post.id}>
               <PostListItem
                 post={post}
-                onSelect={handleSelectItem} 
+                onSelect={handleSelectItem}
                 onDismiss={handleDismissItem}
                 read={getReadStatus(post.id)}
                 isSelected={post.id === selectedId}
